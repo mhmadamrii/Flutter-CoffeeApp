@@ -1,4 +1,5 @@
 import 'package:coffeeshop/utils/coffee_tile.dart';
+import 'package:coffeeshop/utils/coffee_type.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -10,6 +11,25 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
+  // list of coffee types
+  final List coffeeType = [
+    ['Cappucino', true],
+    ['Latte', false],
+    ['Black', false],
+    ['Tea', false]
+  ];
+
+  // user tapped on selected coffee types
+  void coffeeTapSelected(int index) {
+    setState(() {
+      // loops for every selection false
+      for (int i = 0; i < coffeeType.length; i++) {
+        coffeeType[i][1] = false;
+      }
+      coffeeType[index][1] = true;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,15 +82,44 @@ class _HomepageState extends State<Homepage> {
           ),
           const SizedBox(height: 25),
 
+          // horizontal listView of coffee types
+          Container(
+            height: 50,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: coffeeType.length,
+              itemBuilder: ((context, index) {
+                return CoffeeType(
+                  coffeeType: coffeeType[index][0],
+                  isSelected: coffeeType[index][1],
+                  onTap: (() {
+                    coffeeTapSelected(index);
+                  }),
+                );
+              }),
+            ),
+          ),
+
           // horizontal listview
           Expanded(
             child: ListView(
               scrollDirection: Axis.horizontal,
-              children: const [
-                CoffeeTile(),
-                CoffeeTile(),
-                CoffeeTile(),
-                CoffeeTile(),
+              children: [
+                CoffeeTile(
+                  coffeeImagePath: 'assets/images/kopi1.jpg',
+                  coffeeName: 'Cappucino',
+                  coffeePrice: '4.20',
+                ),
+                CoffeeTile(
+                  coffeeImagePath: 'assets/images/kopi2.jpg',
+                  coffeeName: 'Latte',
+                  coffeePrice: '2.50',
+                ),
+                CoffeeTile(
+                  coffeeImagePath: 'assets/images/kopi3.jpg',
+                  coffeeName: 'Arabica',
+                  coffeePrice: '1.80',
+                ),
               ],
             ),
           )
