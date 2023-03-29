@@ -2,7 +2,7 @@
 
 This is a simple Coffee shop app built using Flutter.
 
-![alt text](./assets/images/locals/ss.png)
+![alt text](./assets/locals/ss.png)
 
 # Features
 
